@@ -39,6 +39,7 @@ import { GymWorkoutCardMockup } from "@/components/gymai/GymWorkoutCardMockup";
 import { GymVolumeChartMockup } from "@/components/gymai/GymVolumeChartMockup";
 import { GymBioRingMockup } from "@/components/gymai/GymBioRingMockup";
 import { MultiAgentOrchestratorSection } from "@/components/gymai/MultiAgentOrchestratorSection";
+import { AppScreensShowcaseSection } from "@/components/gymai/AppScreensShowcaseSection";
 
 interface GymAILandingPageProps {
   initialLang?: "es" | "en";
@@ -749,6 +750,9 @@ export function GymAILandingPage({ initialLang = "es" }: GymAILandingPageProps) 
 
       {/* 🤖 SECTION 3: INTERACTIVE 5-AGENT CONSTELLATION ORCHESTRATOR (From Official TFG Architecture) */}
       <MultiAgentOrchestratorSection lang={lang} />
+
+      {/* 📱 SECTION 4: REAL APP SCREENS SHOWCASE (From Official TFG Design Files) */}
+      <AppScreensShowcaseSection lang={lang} />
 
       {/* 📄 CLEAN FOOTER */}
       <footer className="relative z-10 border-t border-white/[0.06] py-12 px-6 sm:px-12 text-center text-xs text-zinc-500">
