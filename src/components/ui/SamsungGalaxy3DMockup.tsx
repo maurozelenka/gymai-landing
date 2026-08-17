@@ -4,13 +4,57 @@ import Image from "next/image";
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useState, useEffect } from "react";
 
-interface SamsungGalaxy3DMockupProps {
-  currentScreen?: "routines" | "live_workout";
-  scale?: number;
-}
+// Official Real App Screens from TFG-GymAI Design Catalog
+const appScreens = [
+  {
+    id: "routines",
+    title: "Explorar Rutinas",
+    tag: "CATÁLOGO JETPACK COMPOSE",
+    src: "/images/app/Rutinas.png",
+  },
+  {
+    id: "agent_chat",
+    title: "Asistente Gemini en Vivo",
+    tag: "ORQUESTADOR AUTÓNOMO",
+    src: "/images/app/Asistente_IA.png",
+  },
+  {
+    id: "smart_swap",
+    title: "Sustitución en Caliente",
+    tag: "EQUIVALENCIA BIOMECÁNICA",
+    src: "/images/app/Asistente_IA_Sustitucion.png",
+  },
+  {
+    id: "live_workout",
+    title: "Registro de Serie",
+    tag: "TIMER HÁPTICO + RPE",
+    src: "/images/app/Rutinas_Empezar_Serie.png",
+  },
+  {
+    id: "biometrics",
+    title: "Health Connect SDK",
+    tag: "VFC, SUEÑO & PULSO",
+    src: "/images/app/Perfil_Salud.png",
+  },
+  {
+    id: "feed_social",
+    title: "Feed Comunitario & PRs",
+    tag: "FIRESTORE SYNC",
+    src: "/images/app/Feed_Social.png",
+  },
+];
 
-export function SamsungGalaxy3DMockup({ currentScreen = "routines" }: SamsungGalaxy3DMockupProps) {
+export function SamsungGalaxy3DMockup() {
   const [isPoweredOn, setIsPoweredOn] = useState(false);
+  const [currentScreenIndex, setCurrentScreenIndex] = useState(0);
+
+  // Auto-switch screen every 2.3 seconds smoothly
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentScreenIndex((prev) => (prev + 1) % appScreens.length);
+    }, 2300);
+    return () => clearInterval(interval);
+  }, []);
 
   // Mouse Parallax Physics (Linear / Apple style springs)
   const mouseX = useMotionValue(0);
@@ -50,6 +94,8 @@ export function SamsungGalaxy3DMockup({ currentScreen = "routines" }: SamsungGal
     return () => clearTimeout(timer);
   }, []);
 
+  const activeScreen = appScreens[currentScreenIndex];
+
   return (
     <div className="relative select-none" style={{ perspective: "1400px" }}>
       
@@ -64,7 +110,7 @@ export function SamsungGalaxy3DMockup({ currentScreen = "routines" }: SamsungGal
           transformStyle: "preserve-3d",
           transformOrigin: "center center",
         }}
-        className="relative w-[230px] sm:w-[255px] aspect-[9/19.5] cursor-pointer"
+        className="relative w-[230px] sm:w-[255px] aspect-[9/19.5] cursor-pointer group"
       >
         
         {/* 🔊 Physical Hardware Buttons on the Right Side (Sleek Matte Obsidian Black / Dark Titanium) */}
@@ -85,7 +131,7 @@ export function SamsungGalaxy3DMockup({ currentScreen = "routines" }: SamsungGal
             {/* Top Ear Speaker Micro-slit */}
             <div className="absolute top-1 left-1/2 -translate-x-1/2 w-12 h-[2.5px] bg-[#1a251e] rounded-full z-50" />
 
-            {/* 📲 3. High-Res App Screen Display (Animates on Screen Change) */}
+            {/* 📲 3. High-Res App Screen Display (Smooth crossfade every 2.3s) */}
             <motion.div 
               initial={{ opacity: 0, filter: "brightness(0)" }}
               animate={{ 
@@ -96,93 +142,39 @@ export function SamsungGalaxy3DMockup({ currentScreen = "routines" }: SamsungGal
               className="relative w-full h-full"
             >
               <AnimatePresence mode="wait">
-                {currentScreen === "routines" ? (
-                  <motion.div
-                    key="routines"
-                    initial={{ opacity: 0, scale: 0.96 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 1.04 }}
-                    transition={{ duration: 0.4 }}
-                    className="relative w-full h-full"
-                  >
-                    <Image
-                      src="/gym-routines-screen.png"
-                      alt="GymAI Explorar Rutinas"
-                      fill
-                      priority
-                      quality={100}
-                      unoptimized
-                      className="object-cover object-center"
-                    />
-                  </motion.div>
-                ) : (
-                  /* 🟢 Live Sensor & Health Connect HUD Live Screen */
-                  <motion.div
-                    key="live_workout"
-                    initial={{ opacity: 0, scale: 0.96 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 1.04 }}
-                    transition={{ duration: 0.4 }}
-                    className="relative w-full h-full bg-[#070d09] p-5 flex flex-col justify-between text-white font-sans overflow-hidden"
-                  >
-                    {/* Background Radar Ambient Mesh */}
-                    <div className="absolute top-0 right-0 w-44 h-44 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
-
-                    {/* Top Status */}
-                    <div className="relative z-10 pt-6">
-                      <div className="flex items-center justify-between text-[11px] text-zinc-400 mb-2">
-                        <span className="font-mono text-emerald-400 flex items-center gap-1.5">
-                          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                          EN VIVO • HEALTH CONNECT
-                        </span>
-                        <span className="font-mono">148 BPM</span>
-                      </div>
-                      <h3 className="text-base font-black text-white leading-tight">
-                        Sentadilla Trasera
-                      </h3>
-                      <p className="text-[11px] text-zinc-400">Serie 3 de 4 • RPE 8.5 Objetivo</p>
-                    </div>
-
-                    {/* Center Biometric & Fatigue Visualizer */}
-                    <div className="relative z-10 my-auto py-3">
-                      <div className="p-3.5 rounded-2xl bg-white/[0.04] border border-emerald-500/30 backdrop-blur-md">
-                        <div className="flex justify-between items-end mb-2">
-                          <span className="text-[10px] text-zinc-400 uppercase font-mono">Fatiga Muscular</span>
-                          <span className="text-sm font-extrabold text-emerald-400 font-mono">72%</span>
-                        </div>
-                        {/* Smooth live meter */}
-                        <div className="w-full h-2 rounded-full bg-black/60 overflow-hidden p-0.5 border border-white/[0.05]">
-                          <motion.div 
-                            animate={{ width: ["68%", "75%", "72%"] }}
-                            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                            className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-300 shadow-[0_0_10px_rgba(52,211,153,0.8)]"
-                          />
-                        </div>
-
-                        {/* Telemetry Numbers */}
-                        <div className="grid grid-cols-2 gap-2 mt-3 pt-3 border-t border-white/[0.06] text-left">
-                          <div>
-                            <span className="text-[9px] text-zinc-400 uppercase">Sobrecarga</span>
-                            <p className="text-xs font-bold text-white font-mono">+2.5 kg próx.</p>
-                          </div>
-                          <div>
-                            <span className="text-[9px] text-zinc-400 uppercase">Velocidad</span>
-                            <p className="text-xs font-bold text-emerald-400 font-mono">0.52 m/s</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Bottom AI Suggestion Pill */}
-                    <div className="relative z-10 pb-2">
-                      <div className="p-2.5 rounded-xl bg-emerald-950/80 border border-emerald-500/40 text-[10px] text-emerald-300 leading-snug">
-                        ⚡ <strong>Agente Gemini:</strong> Mantén 120s de pausa. Recuperación cardiovascular al 94%.
-                      </div>
-                    </div>
-
-                  </motion.div>
-                )}
+                <motion.div
+                  key={activeScreen.id}
+                  initial={{ opacity: 0, scale: 0.96 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 1.03 }}
+                  transition={{ duration: 0.45, ease: "easeInOut" }}
+                  className="relative w-full h-full"
+                >
+                  <Image
+                    src={activeScreen.src}
+                    alt={activeScreen.title}
+                    fill
+                    priority
+                    quality={100}
+                    unoptimized
+                    className="object-cover object-center"
+                  />
+                </motion.div>
               </AnimatePresence>
+
+              {/* Dynamic Bottom Screen Indicator Bar */}
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-1 z-40 bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-full border border-white/[0.1]">
+                {appScreens.map((_, idx) => (
+                  <div
+                    key={idx}
+                    className={`h-1 rounded-full transition-all duration-300 ${
+                      idx === currentScreenIndex
+                        ? "w-3 bg-emerald-400"
+                        : "w-1 bg-white/30"
+                    }`}
+                  />
+                ))}
+              </div>
 
               {/* Cursor Interactive Glass Light Sheen */}
               <motion.div

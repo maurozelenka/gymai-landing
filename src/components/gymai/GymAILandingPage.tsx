@@ -634,125 +634,58 @@ export function GymAILandingPage({ initialLang = "es" }: GymAILandingPageProps) 
         </div>
       </section>
 
-      {/* 🔮 SECTION 2: SCROLL-DRIVEN 3D ZOOM & LIVE HEALTH CONNECT SENSORS (No Cards, Pure Apple/Linear Storytelling) */}
-      <section id="features" className="relative z-10 py-24 sm:py-36 px-6 sm:px-12 max-w-7xl mx-auto border-t border-white/[0.04]">
-        
-        {/* Section Intro Title (Linear Style) */}
-        <div className="text-center max-w-2xl mx-auto mb-16 sm:mb-20">
-          <motion.span 
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-xs font-mono text-emerald-400 uppercase tracking-widest"
-          >
-            {lang === "es" ? "Monitorización en Tiempo Real" : "Real-Time Telemetry"}
-          </motion.span>
-          <motion.h2 
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-3xl sm:text-5xl font-extrabold tracking-tight text-[#f7f8f8] mt-3"
-          >
-            {lang === "es" ? "Cada repetición, analizada al milisegundo." : "Every single rep, analyzed in milliseconds."}
-          </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-sm sm:text-base text-[#8a8f98] mt-4 leading-relaxed"
-          >
-            {lang === "es" 
-              ? "El agente cognitivo cruza tu frecuencia cardíaca continua, velocidad de barra y fatiga acumulada mediante Health Connect para sugerirte el peso exacto de la siguiente serie."
-              : "The cognitive agent correlates continuous heart rate, barbell velocity, and fatigue via Health Connect to compute the exact load for your next set."}
-          </motion.p>
-        </div>
-
-        {/* Center Stage: Phone with Live Workout Screen + Floating Metrics (No Cards) */}
-        <div className="relative w-full flex flex-col lg:flex-row items-center justify-center gap-12 sm:gap-16">
-          
-          {/* Left Live Telemetry Column (Pure Typographic, High Tech) */}
-          <div className="flex flex-col gap-8 text-left max-w-xs w-full">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <span className="text-[11px] font-mono text-emerald-400/80 uppercase">01 / Fatiga Axial & Muscular</span>
-              <h3 className="text-xl font-bold text-white mt-1">Ajuste de Carga Automático</h3>
-              <p className="text-xs text-zinc-400 mt-2 leading-relaxed">
-                Si la velocidad de ejecución cae más del 15%, el agente recalcula la serie en vivo para prevenir lesiones sin frenar el estímulo hipertrófico.
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <span className="text-[11px] font-mono text-emerald-400/80 uppercase">02 / Recuperación Inter-Series</span>
-              <h3 className="text-xl font-bold text-white mt-1">Cronómetro Dinámico Háptico</h3>
-              <p className="text-xs text-zinc-400 mt-2 leading-relaxed">
-                El descanso no es fijo: GymAI monitoriza la caída de tus BPM tras la serie para avisarte por vibración en el instante fisiológico óptimo.
-              </p>
-            </motion.div>
-          </div>
-
-          {/* Center: The 3D Phone Zoomed In & Showing Live Telemetry Screen */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 30 }}
-            whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="relative flex justify-center scale-105 sm:scale-115"
-          >
-            {/* Ambient Backlight Glow */}
-            <div className="absolute inset-0 bg-emerald-500/15 rounded-full blur-[90px] pointer-events-none" />
-
-            <SamsungGalaxy3DMockup currentScreen="live_workout" />
-          </motion.div>
-
-          {/* Right Live Telemetry Column (Pure Typographic, High Tech) */}
-          <div className="flex flex-col gap-8 text-left max-w-xs w-full">
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-            >
-              <span className="text-[11px] font-mono text-emerald-400/80 uppercase">03 / Health Connect SDK</span>
-              <h3 className="text-xl font-bold text-white mt-1">Sincronización Android Nativa</h3>
-              <p className="text-xs text-zinc-400 mt-2 leading-relaxed">
-                Lectura sin fisuras de horas de sueño profundo (REM), variabilidad del ritmo cardíaco (VFC) y pasos diarios sin requerir wearables propietarios.
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-            >
-              <span className="text-[11px] font-mono text-emerald-400/80 uppercase">04 / 100% Offline-First</span>
-              <h3 className="text-xl font-bold text-white mt-1">Room DB & Cifrado Local</h3>
-              <p className="text-xs text-zinc-400 mt-2 leading-relaxed">
-                Tus datos biométricos se procesan de forma local en tu teléfono con persistencia SQLite ultra-rápida y cero latencia en el gimnasio.
-              </p>
-            </motion.div>
-          </div>
-
-        </div>
-
-      </section>
-
-      {/* 🤖 SECTION 3: INTERACTIVE 5-AGENT CONSTELLATION ORCHESTRATOR (From Official TFG Architecture) */}
+      {/* 🤖 SECTION 2: INTERACTIVE 5-AGENT CONSTELLATION ORCHESTRATOR (From Official TFG Architecture) */}
       <MultiAgentOrchestratorSection lang={lang} />
 
-      {/* 📱 SECTION 4: REAL APP SCREENS SHOWCASE (From Official TFG Design Files) */}
-      <AppScreensShowcaseSection lang={lang} />
+      {/* ⚡ SECTION 3: CORE ENGINEERING PILLARS (Clean Minimal Typography - Zero Extra Phones) */}
+      <section id="features" className="relative z-10 py-24 sm:py-32 px-6 sm:px-12 max-w-7xl mx-auto border-t border-white/[0.04]">
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <span className="text-xs font-mono text-emerald-400 uppercase tracking-widest">
+            {lang === "es" ? "Pilares de Ingeniería" : "Engineering Pillars"}
+          </span>
+          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-[#f7f8f8] mt-3">
+            {lang === "es" ? "Arquitectura nativa. Cero fricción." : "Native architecture. Zero friction."}
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {[
+            {
+              step: "01",
+              title: lang === "es" ? "Google Gemini Flash" : "Google Gemini Flash",
+              desc: lang === "es" ? "Razonamiento multi-agente en <350ms para sugerir micro-ajustes de carga y volumen en caliente." : "Multi-agent reasoning in <350ms suggesting real-time load and volume adjustments."
+            },
+            {
+              step: "02",
+              title: lang === "es" ? "Health Connect SDK" : "Health Connect SDK",
+              desc: lang === "es" ? "Lectura nativa de variabilidad cardíaca (VFC), horas de sueño REM y gasto metabólico." : "Native ingestion of heart rate variability (HRV), REM sleep stages, and active caloric burn."
+            },
+            {
+              step: "03",
+              title: lang === "es" ? "100% Offline-First" : "100% Offline-First",
+              desc: lang === "es" ? "Persistencia en SQLite con Room ORM y cifrado AES-256. Todo tu historial vive en tu dispositivo." : "SQLite persistence with Room ORM and AES-256 encryption. Your health records stay on-device."
+            },
+            {
+              step: "04",
+              title: lang === "es" ? "Jetpack Compose MVI" : "Jetpack Compose MVI",
+              desc: lang === "es" ? "Renderizado reactivo a 120 FPS desarrollado íntegramente en Kotlin con Material 3." : "Reactive 120 FPS rendering engineered completely in Kotlin and Material 3 design."
+            }
+          ].map((item, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+              className="flex flex-col text-left space-y-2 border-l border-white/[0.08] pl-6 hover:border-emerald-400 transition-colors"
+            >
+              <span className="text-xs font-mono text-emerald-400/70 font-bold">{item.step}</span>
+              <h3 className="text-lg font-bold text-white">{item.title}</h3>
+              <p className="text-xs text-zinc-400 leading-relaxed">{item.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
 
       {/* 📄 CLEAN FOOTER */}
       <footer className="relative z-10 border-t border-white/[0.06] py-12 px-6 sm:px-12 text-center text-xs text-zinc-500">
