@@ -557,45 +557,16 @@ export function GymAILandingPage({ initialLang = "es" }: GymAILandingPageProps) 
           {/* RIGHT COLUMN: 3D SAMSUNG GALAXY PHONE WITH CONCENTRIC RADAR RINGS & 4 ICONS */}
           <div className="lg:col-span-6 relative w-full flex flex-col sm:flex-row items-center justify-center min-h-[440px] sm:min-h-[480px] mt-8 lg:mt-0">
             
-            {/* 🟢 Pulsing Multi-Ring Radar Acoustic Waves */}
+            {/* 🟢 Harmonic Concentric Radar Rings (Zero CPU/GPU overhead) */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none lg:-translate-x-8">
               {/* Radar Center Glow */}
-              <div className="absolute w-[200px] h-[200px] bg-emerald-500/20 rounded-full blur-[80px]" />
-
-              {/* Animated expanding radar wave 1 */}
-              <motion.div
-                animate={{
-                  scale: [1, 1.45, 1.9],
-                  opacity: [0.6, 0.25, 0],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeOut",
-                }}
-                className="absolute w-[260px] sm:w-[280px] h-[260px] sm:h-[280px] rounded-full border-[1.5px] border-emerald-400/40"
-              />
-
-              {/* Animated expanding radar wave 2 */}
-              <motion.div
-                animate={{
-                  scale: [1, 1.45, 1.9],
-                  opacity: [0.6, 0.25, 0],
-                }}
-                transition={{
-                  duration: 4,
-                  delay: 1.8,
-                  repeat: Infinity,
-                  ease: "easeOut",
-                }}
-                className="absolute w-[260px] sm:w-[280px] h-[260px] sm:h-[280px] rounded-full border-[1.5px] border-emerald-400/40"
-              />
+              <div className="absolute w-[200px] h-[200px] rounded-full bg-[radial-gradient(circle,rgba(16,185,129,0.18)_0%,transparent_70%)]" />
 
               {/* Fixed outer harmonic rings */}
-              <div className="absolute w-[320px] sm:w-[340px] h-[320px] sm:h-[340px] rounded-full border border-emerald-500/20" />
-              <div className="absolute w-[400px] sm:w-[440px] h-[400px] sm:h-[440px] rounded-full border border-emerald-500/15" />
-              <div className="absolute w-[500px] sm:w-[540px] h-[500px] sm:h-[540px] rounded-full border border-emerald-500/10" />
-              <div className="absolute w-[600px] sm:w-[660px] h-[600px] sm:h-[660px] rounded-full border border-emerald-500/[0.05]" />
+              <div className="absolute w-[260px] sm:w-[280px] h-[260px] sm:h-[280px] rounded-full border border-emerald-400/30" />
+              <div className="absolute w-[340px] sm:w-[360px] h-[340px] sm:h-[360px] rounded-full border border-emerald-500/20" />
+              <div className="absolute w-[440px] sm:w-[460px] h-[440px] sm:h-[460px] rounded-full border border-emerald-500/10" />
+              <div className="absolute w-[560px] sm:w-[580px] h-[560px] sm:h-[580px] rounded-full border border-emerald-500/[0.04]" />
             </div>
 
             {/* 📱 3D Samsung Galaxy Phone */}
