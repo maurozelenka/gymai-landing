@@ -384,38 +384,66 @@ export function GymAILandingPage({ initialLang = "es" }: GymAILandingPageProps) 
           {/* LEFT COLUMN: Clean Typography & Exact Copy */}
           <div className="lg:col-span-6 flex flex-col items-start text-left z-20">
 
-            {/* Exact Headline */}
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-4xl sm:text-5xl lg:text-[54px] font-black tracking-tight leading-[1.08] text-white mb-4"
-            >
-              {lang === "es" ? "Tu entrenamiento." : "Your workout."}<br />
-              <motion.span 
-                animate={{
-                  backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-                }}
-                transition={{
-                  duration: 10,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                style={{
-                  backgroundImage: "linear-gradient(90deg, #10b981, #34d399, #6ee7b7, #059669, #10b981)",
-                  backgroundSize: "260% 100%",
-                }}
-                className="bg-clip-text text-transparent inline-block"
-              >
-                {lang === "es" ? "Potenciado por IA." : "Powered by AI."}
-              </motion.span>
-            </motion.h1>
+            {/* Exact Headline (Cinematic Apple / Linear Word Reveal) */}
+            <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black tracking-tight leading-[1.08] text-white mb-4 overflow-hidden">
+              <span className="inline-block overflow-hidden pb-1">
+                {(lang === "es" ? ["Tu", "entrenamiento."] : ["Your", "workout."]).map((word, i) => (
+                  <motion.span
+                    key={i}
+                    initial={{ opacity: 0, y: 35, filter: "blur(8px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    transition={{
+                      duration: 0.7,
+                      delay: 0.1 + i * 0.12,
+                      ease: [0.215, 0.61, 0.355, 1],
+                    }}
+                    className="inline-block mr-3"
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+              </span>
+              <br />
+              <span className="inline-block overflow-hidden pb-1">
+                {(lang === "es" ? ["Potenciado", "por", "IA."] : ["Powered", "by", "AI."]).map((word, i) => (
+                  <motion.span
+                    key={i}
+                    initial={{ opacity: 0, y: 35, filter: "blur(8px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    transition={{
+                      duration: 0.7,
+                      delay: 0.35 + i * 0.12,
+                      ease: [0.215, 0.61, 0.355, 1],
+                    }}
+                    className="inline-block mr-3"
+                  >
+                    <motion.span
+                      animate={{
+                        backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                      }}
+                      transition={{
+                        duration: 10,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                      style={{
+                        backgroundImage: "linear-gradient(90deg, #10b981, #34d399, #6ee7b7, #059669, #10b981)",
+                        backgroundSize: "260% 100%",
+                      }}
+                      className="bg-clip-text text-transparent inline-block"
+                    >
+                      {word}
+                    </motion.span>
+                  </motion.span>
+                ))}
+              </span>
+            </h1>
 
-            {/* Subtitle (2 Lines) */}
+            {/* Subtitle (Smooth Staggered Fade Up) */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ duration: 0.8, delay: 0.7, ease: "easeOut" }}
               className="text-sm sm:text-base text-zinc-300 leading-relaxed mb-6"
             >
               <p>{lang === "es" ? "Entrena mejor, progresa más." : "Train better, progress further."}</p>
