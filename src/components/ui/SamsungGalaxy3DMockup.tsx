@@ -1,61 +1,49 @@
 "use client";
 
 import Image from "next/image";
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { useState, useEffect } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { useEffect } from "react";
 
-// Official Real App Screens from TFG-GymAI Design Catalog
-const appScreens = [
+export interface HeroScreen {
+  id: string;
+  title: string;
+  sub: string;
+  src: string;
+}
+
+export const HERO_SCREENS: HeroScreen[] = [
   {
-    id: "routines",
-    title: "Explorar Rutinas",
-    tag: "CATÁLOGO JETPACK COMPOSE",
+    id: "rutinas",
+    title: "Rutinas & Series",
+    sub: "Catálogo y registro",
     src: "/images/app/Rutinas.png",
   },
   {
-    id: "agent_chat",
-    title: "Asistente Gemini en Vivo",
-    tag: "ORQUESTADOR AUTÓNOMO",
+    id: "ia",
+    title: "Agentes IA",
+    sub: "Razonamiento Gemini",
     src: "/images/app/Asistente_IA.png",
   },
   {
-    id: "smart_swap",
-    title: "Sustitución en Caliente",
-    tag: "EQUIVALENCIA BIOMECÁNICA",
-    src: "/images/app/Asistente_IA_Sustitucion.png",
-  },
-  {
-    id: "live_workout",
-    title: "Registro de Serie",
-    tag: "TIMER HÁPTICO + RPE",
-    src: "/images/app/Rutinas_Empezar_Serie.png",
-  },
-  {
-    id: "biometrics",
-    title: "Health Connect SDK",
-    tag: "VFC, SUEÑO & PULSO",
+    id: "perfil",
+    title: "Perfil & Salud",
+    sub: "Health Connect SDK",
     src: "/images/app/Perfil_Salud.png",
   },
   {
-    id: "feed_social",
-    title: "Feed Comunitario & PRs",
-    tag: "FIRESTORE SYNC",
+    id: "feed",
+    title: "Feed Social",
+    sub: "Comunidad y PRs",
     src: "/images/app/Feed_Social.png",
   },
 ];
 
-export function SamsungGalaxy3DMockup() {
-  const [isPoweredOn, setIsPoweredOn] = useState(false);
-  const [currentScreenIndex, setCurrentScreenIndex] = useState(0);
+interface SamsungGalaxy3DMockupProps {
+  currentScreenIndex: number;
+  onSelectScreen?: (index: number) => void;
+}
 
-  // Auto-switch screen every 2.3 seconds smoothly
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentScreenIndex((prev) => (prev + 1) % appScreens.length);
-    }, 2300);
-    return () => clearInterval(interval);
-  }, []);
-
+export function SamsungGalaxy3DMockup({ currentScreenIndex, onSelectScreen }: SamsungGalaxy3DMockupProps) {
   // Mouse Parallax Physics (Linear / Apple style springs)
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -87,15 +75,6 @@ export function SamsungGalaxy3DMockup() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [mouseX, mouseY]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsPoweredOn(true);
-    }, 250);
-    return () => clearTimeout(timer);
-  }, []);
-
-  const activeScreen = appScreens[currentScreenIndex];
-
   return (
     <div className="relative select-none" style={{ perspective: "1400px" }}>
       
@@ -113,11 +92,11 @@ export function SamsungGalaxy3DMockup() {
         className="relative w-[230px] sm:w-[255px] aspect-[9/19.5] cursor-pointer group"
       >
         
-        {/* 🔊 Physical Hardware Buttons on the Right Side (Sleek Matte Obsidian Black / Dark Titanium) */}
+        {/* 🔊 Physical Hardware Buttons on the Right Side */}
         <div className="absolute -right-[6px] top-[105px] w-[5px] h-[52px] bg-[#1c1c1e] rounded-r-[3px] border-r border-t border-b border-[#333336] shadow-[1px_0_4px_rgba(0,0,0,0.8)] z-40" title="Volumen +/-" />
         <div className="absolute -right-[6px] top-[175px] w-[5px] h-[32px] bg-[#1c1c1e] rounded-r-[3px] border-r border-t border-b border-[#333336] shadow-[1px_0_4px_rgba(0,0,0,0.8)] z-40" title="Botón Encendido" />
 
-        {/* 📱 2. Main Outer Frame & Bezel (Matte Obsidian Black Titanium) */}
+        {/* 📱 2. Main Outer Frame & Bezel */}
         <div className="relative w-full h-full rounded-[42px] bg-[#111312] p-[6px] border-[2px] border-[#222724] shadow-[0_30px_90px_rgba(0,0,0,0.95),inset_0_1px_1px_rgba(255,255,255,0.15)] overflow-hidden">
           
           {/* Inner Display Bezel */}
@@ -131,46 +110,51 @@ export function SamsungGalaxy3DMockup() {
             {/* Top Ear Speaker Micro-slit */}
             <div className="absolute top-1 left-1/2 -translate-x-1/2 w-12 h-[2.5px] bg-[#1a251e] rounded-full z-50" />
 
-            {/* 📲 3. High-Res App Screen Display (Smooth crossfade every 2.3s) */}
-            <motion.div 
-              initial={{ opacity: 0, filter: "brightness(0)" }}
-              animate={{ 
-                opacity: isPoweredOn ? 1 : 0, 
-                filter: isPoweredOn ? "brightness(1)" : "brightness(0)"
-              }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="relative w-full h-full"
-            >
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeScreen.id}
-                  initial={{ opacity: 0, scale: 0.96 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 1.03 }}
-                  transition={{ duration: 0.45, ease: "easeInOut" }}
-                  className="relative w-full h-full"
-                >
-                  <Image
-                    src={activeScreen.src}
-                    alt={activeScreen.title}
-                    fill
-                    priority
-                    quality={100}
-                    unoptimized
-                    className="object-cover object-center"
-                  />
-                </motion.div>
-              </AnimatePresence>
+            {/* 📲 3. Screen Layer (Stacked Crossfade across 4 core screens) */}
+            <div className="relative w-full h-full bg-black">
+              {HERO_SCREENS.map((screen, idx) => {
+                const isCurrent = idx === currentScreenIndex;
+                return (
+                  <motion.div
+                    key={screen.id}
+                    initial={false}
+                    animate={{
+                      opacity: isCurrent ? 1 : 0,
+                      scale: isCurrent ? 1 : 0.98,
+                      zIndex: isCurrent ? 20 : 10,
+                    }}
+                    transition={{
+                      duration: 0.9,
+                      ease: [0.25, 0.1, 0.25, 1],
+                    }}
+                    className="absolute inset-0 w-full h-full"
+                  >
+                    <Image
+                      src={screen.src}
+                      alt={screen.title}
+                      fill
+                      priority
+                      quality={100}
+                      unoptimized
+                      className="object-cover object-center"
+                    />
+                  </motion.div>
+                );
+              })}
 
               {/* Dynamic Bottom Screen Indicator Bar */}
               <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-1 z-40 bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-full border border-white/[0.1]">
-                {appScreens.map((_, idx) => (
-                  <div
+                {HERO_SCREENS.map((_, idx) => (
+                  <button
                     key={idx}
-                    className={`h-1 rounded-full transition-all duration-300 ${
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onSelectScreen?.(idx);
+                    }}
+                    className={`h-1 rounded-full transition-all duration-400 ${
                       idx === currentScreenIndex
-                        ? "w-3 bg-emerald-400"
-                        : "w-1 bg-white/30"
+                        ? "w-3.5 bg-emerald-400"
+                        : "w-1 bg-white/30 hover:bg-white/60"
                     }`}
                   />
                 ))}
@@ -202,24 +186,12 @@ export function SamsungGalaxy3DMockup() {
               {/* Edge Screen Curved Glow Reflection */}
               <div className="absolute inset-y-0 left-0 w-[3px] bg-gradient-to-r from-white/[0.12] to-transparent pointer-events-none z-30" />
               <div className="absolute inset-y-0 right-0 w-[3px] bg-gradient-to-l from-white/[0.12] to-transparent pointer-events-none z-30" />
-            </motion.div>
-
-            {/* OLED Screen Power-on Overlay */}
-            <AnimatePresence>
-              {!isPoweredOn && (
-                <motion.div
-                  initial={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.4 }}
-                  className="absolute inset-0 bg-black z-40"
-                />
-              )}
-            </AnimatePresence>
+            </div>
 
           </div>
         </div>
 
-        {/* 🌟 4. Deep Dynamic Floor Shadow (Moves dynamically with parallax) */}
+        {/* 🌟 4. Deep Dynamic Floor Shadow */}
         <motion.div 
           style={{
             x: useTransform(smoothX, [-300, 300], [10, -10]),

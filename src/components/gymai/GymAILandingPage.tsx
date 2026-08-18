@@ -36,10 +36,8 @@ import { SamsungGalaxy3DMockup } from "@/components/ui/SamsungGalaxy3DMockup";
 import { GymTabletMockup } from "@/components/ui/GymTabletMockup";
 import { BenchPress100KgMockup } from "@/components/gymai/BenchPress100KgMockup";
 import { GymWorkoutCardMockup } from "@/components/gymai/GymWorkoutCardMockup";
-import { GymVolumeChartMockup } from "@/components/gymai/GymVolumeChartMockup";
-import { GymBioRingMockup } from "@/components/gymai/GymBioRingMockup";
-import { MultiAgentOrchestratorSection } from "@/components/gymai/MultiAgentOrchestratorSection";
-import { AppScreensShowcaseSection } from "@/components/gymai/AppScreensShowcaseSection";
+import { PricingSection } from "@/components/gymai/PricingSection";
+import { FAQSection } from "@/components/gymai/FAQSection";
 
 interface GymAILandingPageProps {
   initialLang?: "es" | "en";
@@ -49,6 +47,16 @@ export function GymAILandingPage({ initialLang = "es" }: GymAILandingPageProps) 
   const [lang, setLang] = useState<"es" | "en">(initialLang);
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"routine" | "biometrics" | "agent">("routine");
+
+  // 🔄 Synchronized 4-Screen Hero Carousel (Longer, graceful 6.5s timer)
+  const [heroScreenIndex, setHeroScreenIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setHeroScreenIndex((prev) => (prev + 1) % 4);
+    }, 6500);
+    return () => clearInterval(interval);
+  }, []);
 
   // Scroll Progress Parallax for Ambient Background Assets
   const { scrollYProgress } = useScroll();
@@ -529,10 +537,10 @@ export function GymAILandingPage({ initialLang = "es" }: GymAILandingPageProps) 
           </div>
 
           {/* RIGHT COLUMN: 3D SAMSUNG GALAXY PHONE WITH CONCENTRIC RADAR RINGS & 4 ICONS */}
-          <div className="lg:col-span-6 relative w-full flex items-center justify-center min-h-[480px]">
+          <div className="lg:col-span-6 relative w-full flex flex-col sm:flex-row items-center justify-center min-h-[440px] sm:min-h-[480px] mt-8 lg:mt-0">
             
             {/* 🟢 Pulsing Multi-Ring Radar Acoustic Waves */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none -translate-x-4 sm:-translate-x-8">
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none lg:-translate-x-8">
               {/* Radar Center Glow */}
               <div className="absolute w-[200px] h-[200px] bg-emerald-500/20 rounded-full blur-[80px]" />
 
@@ -547,7 +555,7 @@ export function GymAILandingPage({ initialLang = "es" }: GymAILandingPageProps) 
                   repeat: Infinity,
                   ease: "easeOut",
                 }}
-                className="absolute w-[280px] h-[280px] rounded-full border-[1.5px] border-emerald-400/40"
+                className="absolute w-[260px] sm:w-[280px] h-[260px] sm:h-[280px] rounded-full border-[1.5px] border-emerald-400/40"
               />
 
               {/* Animated expanding radar wave 2 */}
@@ -562,23 +570,26 @@ export function GymAILandingPage({ initialLang = "es" }: GymAILandingPageProps) 
                   repeat: Infinity,
                   ease: "easeOut",
                 }}
-                className="absolute w-[280px] h-[280px] rounded-full border-[1.5px] border-emerald-400/40"
+                className="absolute w-[260px] sm:w-[280px] h-[260px] sm:h-[280px] rounded-full border-[1.5px] border-emerald-400/40"
               />
 
               {/* Fixed outer harmonic rings */}
-              <div className="absolute w-[340px] h-[340px] rounded-full border border-emerald-500/20" />
-              <div className="absolute w-[440px] h-[440px] rounded-full border border-emerald-500/15" />
-              <div className="absolute w-[540px] h-[540px] rounded-full border border-emerald-500/10" />
-              <div className="absolute w-[660px] h-[660px] rounded-full border border-emerald-500/[0.05]" />
+              <div className="absolute w-[320px] sm:w-[340px] h-[320px] sm:h-[340px] rounded-full border border-emerald-500/20" />
+              <div className="absolute w-[400px] sm:w-[440px] h-[400px] sm:h-[440px] rounded-full border border-emerald-500/15" />
+              <div className="absolute w-[500px] sm:w-[540px] h-[500px] sm:h-[540px] rounded-full border border-emerald-500/10" />
+              <div className="absolute w-[600px] sm:w-[660px] h-[600px] sm:h-[660px] rounded-full border border-emerald-500/[0.05]" />
             </div>
 
             {/* 📱 3D Samsung Galaxy Phone */}
-            <div className="relative z-20 flex justify-center -translate-x-4 sm:-translate-x-8">
-              <SamsungGalaxy3DMockup />
+            <div className="relative z-20 flex justify-center lg:-translate-x-8">
+              <SamsungGalaxy3DMockup 
+                currentScreenIndex={heroScreenIndex} 
+                onSelectScreen={(idx) => setHeroScreenIndex(idx)} 
+              />
             </div>
 
-            {/* 🟢 RIGHT SIDE: Floating 3D Dumbbell App Icon + 4 Vertical Feature Pills */}
-            <div className="absolute right-0 sm:right-2 top-1/2 -translate-y-1/2 flex flex-col items-start gap-3.5 z-30">
+            {/* 🟢 RIGHT SIDE: Floating 3D Dumbbell App Icon + 4 Synchronized Feature Pills */}
+            <div className="relative lg:absolute lg:right-0 sm:right-2 top-auto lg:top-1/2 lg:-translate-y-1/2 flex flex-row lg:flex-col items-center lg:items-start gap-2 sm:gap-3 z-30 mt-6 lg:mt-0 flex-wrap justify-center">
               
               {/* 3D App Icon Top Right with Neon Halo */}
               <motion.div
@@ -586,7 +597,7 @@ export function GymAILandingPage({ initialLang = "es" }: GymAILandingPageProps) 
                 animate={{ opacity: 1, scale: 1 }}
                 whileHover={{ scale: 1.1, rotate: -5 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="w-13 h-13 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-800 p-[1.5px] shadow-[0_0_30px_rgba(16,185,129,0.5)] mb-1 self-start cursor-pointer"
+                className="hidden lg:block w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-800 p-[1.5px] shadow-[0_0_25px_rgba(16,185,129,0.5)] mb-1 self-start cursor-pointer"
               >
                 <div className="w-full h-full rounded-[14px] overflow-hidden relative">
                   <Image
@@ -594,36 +605,71 @@ export function GymAILandingPage({ initialLang = "es" }: GymAILandingPageProps) 
                     alt="GymAI Dumbbell"
                     fill
                     className="object-cover"
-                    sizes="52px"
+                    sizes="48px"
                   />
                 </div>
               </motion.div>
 
-              {/* 4 Feature Items (Icon + Label) */}
+              {/* 4 Interactive Synchronized Screens & Features */}
               {[
-                { icon: Bot, title: lang === "es" ? "Agentes IA" : "AI Agents", sub: lang === "es" ? "sincronizados" : "synchronized" },
-                { icon: Activity, title: lang === "es" ? "Adaptación" : "Adaptation", sub: lang === "es" ? "en tiempo real" : "real-time" },
-                { icon: TrendingUp, title: lang === "es" ? "Datos que impulsan" : "Data that drives", sub: lang === "es" ? "tu progreso" : "your progress" },
-                { icon: Lock, title: lang === "es" ? "Privacidad y seguridad" : "Privacy & security", sub: lang === "es" ? "garantizadas" : "guaranteed" },
+                { 
+                  id: "rutinas",
+                  icon: Dumbbell, 
+                  title: lang === "es" ? "Rutinas & Series" : "Routines & Sets", 
+                  sub: lang === "es" ? "Catálogo y ejecución" : "Catalog & execution" 
+                },
+                { 
+                  id: "ia",
+                  icon: Bot, 
+                  title: lang === "es" ? "Agentes Gemini" : "Gemini Agents", 
+                  sub: lang === "es" ? "Asistente en caliente" : "Live assistance" 
+                },
+                { 
+                  id: "perfil",
+                  icon: Heart, 
+                  title: lang === "es" ? "Perfil & Salud" : "Profile & Health", 
+                  sub: lang === "es" ? "Health Connect SDK" : "Health Connect SDK" 
+                },
+                { 
+                  id: "feed",
+                  icon: Users, 
+                  title: lang === "es" ? "Feed Social" : "Social Feed", 
+                  sub: lang === "es" ? "Comunidad y PRs" : "Community & PRs" 
+                },
               ].map((item, idx) => {
                 const Icon = item.icon;
+                const isActive = heroScreenIndex === idx;
+
                 return (
-                  <motion.div
-                    key={idx}
+                  <motion.button
+                    key={item.id}
+                    onClick={() => setHeroScreenIndex(idx)}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.5, delay: 0.3 + idx * 0.1 }}
                     whileHover={{ x: -4 }}
-                    className="flex items-center gap-2.5 group cursor-pointer"
+                    className={`flex items-center gap-2.5 text-left p-1.5 sm:p-2 pr-3 rounded-xl transition-all duration-300 ${
+                      isActive 
+                        ? "bg-emerald-500/15 border border-emerald-400/40 shadow-[0_0_20px_rgba(52,211,153,0.2)]" 
+                        : "opacity-60 hover:opacity-100 hover:bg-white/[0.04] border border-transparent"
+                    }`}
                   >
-                    <div className="w-7 h-7 rounded-full bg-[#08130c] border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:border-emerald-400 group-hover:bg-[#0e2215] group-hover:shadow-[0_0_15px_rgba(52,211,153,0.3)] transition-all shrink-0 shadow-[0_0_10px_rgba(16,185,129,0.15)]">
-                      <Icon size={13} />
+                    <div className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center transition-all shrink-0 ${
+                      isActive
+                        ? "bg-emerald-400 text-black shadow-[0_0_12px_rgba(52,211,153,0.6)]"
+                        : "bg-[#08130c] border border-emerald-500/30 text-emerald-400"
+                    }`}>
+                      <Icon size={12} />
                     </div>
-                    <div className="text-left">
-                      <p className="text-[11px] font-bold text-zinc-200 group-hover:text-emerald-300 transition-colors leading-tight">{item.title}</p>
-                      <p className="text-[9px] text-zinc-400 leading-tight">{item.sub}</p>
+                    <div>
+                      <p className={`text-[10px] sm:text-[11px] font-bold leading-tight transition-colors ${
+                        isActive ? "text-emerald-300" : "text-zinc-200"
+                      }`}>
+                        {item.title}
+                      </p>
+                      <p className="text-[8px] sm:text-[9px] text-zinc-400 leading-tight hidden sm:block">{item.sub}</p>
                     </div>
-                  </motion.div>
+                  </motion.button>
                 );
               })}
 
@@ -634,72 +680,76 @@ export function GymAILandingPage({ initialLang = "es" }: GymAILandingPageProps) 
         </div>
       </section>
 
-      {/* 🤖 SECTION 2: INTERACTIVE 5-AGENT CONSTELLATION ORCHESTRATOR (From Official TFG Architecture) */}
-      <MultiAgentOrchestratorSection lang={lang} />
+      {/* 💎 SECTION 2: PRICING PLANS (Monthly / Annual Toggle & Pro Agent) */}
+      <PricingSection lang={lang} />
 
-      {/* ⚡ SECTION 3: CORE ENGINEERING PILLARS (Clean Minimal Typography - Zero Extra Phones) */}
-      <section id="features" className="relative z-10 py-24 sm:py-32 px-6 sm:px-12 max-w-7xl mx-auto border-t border-white/[0.04]">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-xs font-mono text-emerald-400 uppercase tracking-widest">
-            {lang === "es" ? "Pilares de Ingeniería" : "Engineering Pillars"}
-          </span>
-          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-[#f7f8f8] mt-3">
-            {lang === "es" ? "Arquitectura nativa. Cero fricción." : "Native architecture. Zero friction."}
-          </h2>
-        </div>
+      {/* ❓ SECTION 3: FAQ ACCORDION (Zero-card Linear minimal style) */}
+      <FAQSection lang={lang} />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {[
-            {
-              step: "01",
-              title: lang === "es" ? "Google Gemini Flash" : "Google Gemini Flash",
-              desc: lang === "es" ? "Razonamiento multi-agente en <350ms para sugerir micro-ajustes de carga y volumen en caliente." : "Multi-agent reasoning in <350ms suggesting real-time load and volume adjustments."
-            },
-            {
-              step: "02",
-              title: lang === "es" ? "Health Connect SDK" : "Health Connect SDK",
-              desc: lang === "es" ? "Lectura nativa de variabilidad cardíaca (VFC), horas de sueño REM y gasto metabólico." : "Native ingestion of heart rate variability (HRV), REM sleep stages, and active caloric burn."
-            },
-            {
-              step: "03",
-              title: lang === "es" ? "100% Offline-First" : "100% Offline-First",
-              desc: lang === "es" ? "Persistencia en SQLite con Room ORM y cifrado AES-256. Todo tu historial vive en tu dispositivo." : "SQLite persistence with Room ORM and AES-256 encryption. Your health records stay on-device."
-            },
-            {
-              step: "04",
-              title: lang === "es" ? "Jetpack Compose MVI" : "Jetpack Compose MVI",
-              desc: lang === "es" ? "Renderizado reactivo a 120 FPS desarrollado íntegramente en Kotlin con Material 3." : "Reactive 120 FPS rendering engineered completely in Kotlin and Material 3 design."
-            }
-          ].map((item, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
-              className="flex flex-col text-left space-y-2 border-l border-white/[0.08] pl-6 hover:border-emerald-400 transition-colors"
+      {/* 🚀 GOOGLE PLAY STORE & CLEAN FOOTER (Exact Match to Reference Layout) */}
+      <footer className="relative z-10 border-t border-white/[0.06] pt-16 pb-12 px-6 sm:px-12 text-center">
+        <div className="max-w-7xl mx-auto flex flex-col items-center justify-center space-y-8">
+          
+          {/* Official Google Play Store Badge Button */}
+          <motion.a
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.96 }}
+            href="https://github.com/maurozelenka"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3.5 px-6 py-2.5 rounded-[14px] bg-[#0c120e] hover:bg-[#121b15] border-2 border-white/[0.2] hover:border-emerald-400/60 shadow-[0_10px_30px_rgba(0,0,0,0.8)] transition-all duration-200 group"
+          >
+            {/* Google Play High-Res Logo Asset */}
+            <div className="w-8 h-8 relative shrink-0">
+              <Image
+                src="/images/google-play-logo.png"
+                alt="Google Play"
+                fill
+                priority
+                unoptimized
+                className="object-contain"
+                sizes="32px"
+              />
+            </div>
+
+            {/* Google Play Text Structure */}
+            <div className="text-left">
+              <p className="text-[10px] text-zinc-400 font-sans uppercase tracking-wider font-semibold leading-tight">
+                GET IT ON
+              </p>
+              <p className="text-lg font-bold text-white font-sans tracking-tight leading-tight group-hover:text-emerald-300 transition-colors">
+                Google Play
+              </p>
+            </div>
+          </motion.a>
+
+          {/* Legal / Copyright Bar with Underlined Links */}
+          <div className="text-xs sm:text-[13px] text-zinc-400 font-medium space-x-1.5 pt-2">
+            <span>Copyright © {new Date().getFullYear()} GymAI Inc.</span>
+            <span>|</span>
+            <Link href={`/${lang}`} className="underline hover:text-emerald-400 transition-colors">
+              maurozelenka.com
+            </Link>
+            <span>|</span>
+            <a 
+              href="https://github.com/maurozelenka" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="underline hover:text-emerald-400 transition-colors"
             >
-              <span className="text-xs font-mono text-emerald-400/70 font-bold">{item.step}</span>
-              <h3 className="text-lg font-bold text-white">{item.title}</h3>
-              <p className="text-xs text-zinc-400 leading-relaxed">{item.desc}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+              Privacy Policy
+            </a>
+            <span>|</span>
+            <a 
+              href="https://github.com/maurozelenka" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="underline hover:text-emerald-400 transition-colors"
+            >
+              Terms & Conditions
+            </a>
+          </div>
 
-      {/* 📄 CLEAN FOOTER */}
-      <footer className="relative z-10 border-t border-white/[0.06] py-12 px-6 sm:px-12 text-center text-xs text-zinc-500">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2 font-bold text-zinc-400">
-            <span>GymAI</span>
-            <span>•</span>
-            <Link href={`/${lang}`} className="hover:text-emerald-400 transition-colors">maurozelenka.com</Link>
-          </div>
-          <p>© {new Date().getFullYear()} GymAI • {lang === "es" ? "Diseñado y desarrollado por Mauro Zelenka Pedrosa" : "Engineered and crafted by Mauro Zelenka Pedrosa"}</p>
-          <div className="flex items-center gap-4">
-            <a href="https://github.com/maurozelenka" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GitHub</a>
-            <a href="https://linkedin.com/in/mauro-zelenka-pedrosa-0a1169185" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LinkedIn</a>
-          </div>
         </div>
       </footer>
 
