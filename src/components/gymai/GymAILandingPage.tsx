@@ -234,8 +234,9 @@ export function GymAILandingPage({ initialLang = "es" }: GymAILandingPageProps) 
             right: "10%",
             y: bgGlowY,
             x: bgGlowX,
+            willChange: "transform",
           }}
-          className="absolute w-[800px] h-[800px] bg-emerald-500/10 rounded-full blur-[160px]" 
+          className="absolute w-[500px] sm:w-[800px] h-[500px] sm:h-[800px] bg-emerald-500/10 rounded-full blur-[100px] sm:blur-[160px] transform-gpu" 
         />
 
         {/* Dynamic SVG Topographic Fluid Wave Lines Texture (Travels and Morphs with Scroll) */}
@@ -244,16 +245,17 @@ export function GymAILandingPage({ initialLang = "es" }: GymAILandingPageProps) 
             y: bgWaveY,
             rotate: bgWaveRotate,
             opacity: bgWaveOpacity,
+            willChange: "transform, opacity",
           }}
-          className="absolute -bottom-28 -left-28 w-[1300px] h-[750px] pointer-events-none text-emerald-400" 
+          className="absolute -bottom-28 -left-28 w-[900px] sm:w-[1300px] h-[550px] sm:h-[750px] pointer-events-none text-emerald-400 transform-gpu" 
           viewBox="0 0 1000 600" 
           fill="none" 
           xmlns="http://www.w3.org/2000/svg"
         >
-          {Array.from({ length: 18 }).map((_, i) => (
+          {Array.from({ length: 14 }).map((_, i) => (
             <path
               key={i}
-              d={`M -50 ${120 + i * 26} C ${200 + i * 15} ${160 + i * 20}, ${500 - i * 10} ${420 - i * 14}, ${1050 + i * 20} ${280 + i * 16}`}
+              d={`M -50 ${120 + i * 32} C ${200 + i * 15} ${160 + i * 20}, ${500 - i * 10} ${420 - i * 14}, ${1050 + i * 20} ${280 + i * 16}`}
               stroke="currentColor"
               strokeWidth="1.2"
               strokeOpacity={0.15 + (i % 3) * 0.12}

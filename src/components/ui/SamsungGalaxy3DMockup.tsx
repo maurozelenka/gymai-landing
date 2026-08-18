@@ -63,16 +63,26 @@ export function SamsungGalaxy3DMockup({ currentScreenIndex, onSelectScreen }: Sa
   const reflectionY = useTransform(smoothY, [-300, 300], ["-20%", "120%"]);
 
   useEffect(() => {
+    // Avoid heavy mouse tracking overhead on mobile touch devices
+    if (window.matchMedia("(pointer: coarse)").matches) return;
+
+    let rafId: number;
     const handleMouseMove = (e: MouseEvent) => {
-      const { innerWidth, innerHeight } = window;
-      const x = e.clientX - innerWidth / 2;
-      const y = e.clientY - innerHeight / 2;
-      mouseX.set(x);
-      mouseY.set(y);
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        const { innerWidth, innerHeight } = window;
+        const x = e.clientX - innerWidth / 2;
+        const y = e.clientY - innerHeight / 2;
+        mouseX.set(x);
+        mouseY.set(y);
+      });
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      cancelAnimationFrame(rafId);
+    };
   }, [mouseX, mouseY]);
 
   return (
@@ -88,8 +98,9 @@ export function SamsungGalaxy3DMockup({ currentScreenIndex, onSelectScreen }: Sa
           rotateZ: -1.5,
           transformStyle: "preserve-3d",
           transformOrigin: "center center",
+          willChange: "transform",
         }}
-        className="relative w-[230px] sm:w-[255px] aspect-[9/19.5] cursor-pointer group"
+        className="relative w-[215px] sm:w-[245px] lg:w-[255px] aspect-[9/19.5] cursor-pointer group transform-gpu"
       >
         
         {/* 🔊 Physical Hardware Buttons on the Right Side */}
