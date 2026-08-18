@@ -225,50 +225,38 @@ export function GymAILandingPage({ initialLang = "es" }: GymAILandingPageProps) 
   return (
     <main className="min-h-screen w-full bg-[#050806] text-white selection:bg-emerald-500 selection:text-black overflow-x-hidden font-sans">
       
-      {/* 🟢 DYNAMIC PARALLAX AMBIENT BACKGROUND & WAVE CURVES */}
+      {/* 🟢 LIGHTWEIGHT HARDWARE-OPTIMIZED BACKGROUND (Instant Mobile Load) */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        {/* Dynamic Traveling Radial Ambient Glow */}
-        <motion.div 
-          style={{
-            top: "30%",
-            right: "10%",
-            y: bgGlowY,
-            x: bgGlowX,
-            willChange: "transform",
-          }}
-          className="absolute w-[500px] sm:w-[800px] h-[500px] sm:h-[800px] bg-emerald-500/10 rounded-full blur-[100px] sm:blur-[160px] transform-gpu" 
-        />
+        {/* Static Radial Ambient Glow (CSS radial gradient is 10x lighter on mobile GPU than large blur filters) */}
+        <div className="absolute top-[15%] -right-[10%] w-[380px] sm:w-[650px] h-[380px] sm:h-[650px] rounded-full bg-[radial-gradient(circle,rgba(16,185,129,0.12)_0%,transparent_70%)]" />
+        <div className="absolute bottom-[20%] -left-[10%] w-[340px] sm:w-[550px] h-[340px] sm:h-[550px] rounded-full bg-[radial-gradient(circle,rgba(5,150,105,0.08)_0%,transparent_70%)]" />
 
-        {/* Dynamic SVG Topographic Fluid Wave Lines Texture (Travels and Morphs with Scroll) */}
+        {/* Dynamic SVG Topographic Fluid Wave Lines Texture */}
         <motion.svg 
           style={{
             y: bgWaveY,
             rotate: bgWaveRotate,
             opacity: bgWaveOpacity,
-            willChange: "transform, opacity",
           }}
-          className="absolute -bottom-28 -left-28 w-[900px] sm:w-[1300px] h-[550px] sm:h-[750px] pointer-events-none text-emerald-400 transform-gpu" 
+          className="absolute -bottom-24 -left-24 w-[750px] sm:w-[1300px] h-[450px] sm:h-[750px] pointer-events-none text-emerald-400 opacity-20 transform-gpu" 
           viewBox="0 0 1000 600" 
           fill="none" 
           xmlns="http://www.w3.org/2000/svg"
         >
-          {Array.from({ length: 14 }).map((_, i) => (
+          {Array.from({ length: 10 }).map((_, i) => (
             <path
               key={i}
-              d={`M -50 ${120 + i * 32} C ${200 + i * 15} ${160 + i * 20}, ${500 - i * 10} ${420 - i * 14}, ${1050 + i * 20} ${280 + i * 16}`}
+              d={`M -50 ${120 + i * 42} C ${200 + i * 15} ${160 + i * 20}, ${500 - i * 10} ${420 - i * 14}, ${1050 + i * 20} ${280 + i * 16}`}
               stroke="currentColor"
               strokeWidth="1.2"
-              strokeOpacity={0.15 + (i % 3) * 0.12}
+              strokeOpacity={0.18 + (i % 3) * 0.12}
             />
           ))}
         </motion.svg>
-
-        {/* Dark Vignette Overlay */}
-        <div className="absolute inset-0 bg-radial-gradient from-transparent via-[#050806]/40 to-[#050806]" />
       </div>
 
-      {/* 🚀 NAVIGATION BAR (Exact Linear Style Match) */}
-      <nav className="sticky top-0 z-50 w-full bg-[#08090a]/80 backdrop-blur-md px-6 sm:px-12 py-3 border-b border-white/[0.08]">
+      {/* 🚀 NAVIGATION BAR (Optimized for iOS WebKit) */}
+      <nav className="sticky top-0 z-50 w-full bg-[#08090a]/90 backdrop-blur-md px-6 sm:px-12 py-3 border-b border-white/[0.08]">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           
           {/* Brand Logo (Linear style with subtle icon) */}

@@ -144,9 +144,9 @@ export function SamsungGalaxy3DMockup({ currentScreenIndex, onSelectScreen }: Sa
                       src={screen.src}
                       alt={screen.title}
                       fill
-                      priority
-                      quality={100}
-                      unoptimized
+                      priority={idx === 0}
+                      quality={85}
+                      sizes="(max-width: 640px) 220px, 260px"
                       className="object-cover object-center"
                     />
                   </motion.div>
@@ -154,7 +154,7 @@ export function SamsungGalaxy3DMockup({ currentScreenIndex, onSelectScreen }: Sa
               })}
 
               {/* Dynamic Bottom Screen Indicator Bar */}
-              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-1 z-40 bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-full border border-white/[0.1]">
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-1 z-40 bg-black/70 px-2 py-0.5 rounded-full border border-white/[0.1]">
                 {HERO_SCREENS.map((_, idx) => (
                   <button
                     key={idx}
@@ -171,13 +171,13 @@ export function SamsungGalaxy3DMockup({ currentScreenIndex, onSelectScreen }: Sa
                 ))}
               </div>
 
-              {/* Cursor Interactive Glass Light Sheen */}
+              {/* Cursor Interactive Glass Light Sheen (Desktop only) */}
               <motion.div
                 style={{
                   left: reflectionX,
                   top: reflectionY,
                 }}
-                className="absolute w-[200px] h-[200px] bg-white/[0.12] rounded-full blur-[40px] pointer-events-none z-30"
+                className="hidden md:block absolute w-[200px] h-[200px] bg-white/[0.12] rounded-full blur-[40px] pointer-events-none z-30"
               />
 
               {/* Dynamic Diagonal Light Gleam Sweep on Glass */}
@@ -188,15 +188,15 @@ export function SamsungGalaxy3DMockup({ currentScreenIndex, onSelectScreen }: Sa
                 transition={{
                   duration: 5,
                   repeat: Infinity,
-                  repeatDelay: 3,
+                  repeatDelay: 4,
                   ease: "easeInOut",
                 }}
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.1] to-transparent -skew-x-12 pointer-events-none z-30"
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.08] to-transparent -skew-x-12 pointer-events-none z-30"
               />
 
               {/* Edge Screen Curved Glow Reflection */}
-              <div className="absolute inset-y-0 left-0 w-[3px] bg-gradient-to-r from-white/[0.12] to-transparent pointer-events-none z-30" />
-              <div className="absolute inset-y-0 right-0 w-[3px] bg-gradient-to-l from-white/[0.12] to-transparent pointer-events-none z-30" />
+              <div className="absolute inset-y-0 left-0 w-[2px] bg-gradient-to-r from-white/[0.1] to-transparent pointer-events-none z-30" />
+              <div className="absolute inset-y-0 right-0 w-[2px] bg-gradient-to-l from-white/[0.1] to-transparent pointer-events-none z-30" />
             </div>
 
           </div>
