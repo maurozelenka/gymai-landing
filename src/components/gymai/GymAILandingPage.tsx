@@ -39,12 +39,14 @@ import { GymWorkoutCardMockup } from "@/components/gymai/GymWorkoutCardMockup";
 import { PricingSection } from "@/components/gymai/PricingSection";
 import { FAQSection } from "@/components/gymai/FAQSection";
 
+export type LanguageCode = "es" | "en" | "de" | "fr" | "it" | "nl";
+
 interface GymAILandingPageProps {
-  initialLang?: "es" | "en";
+  initialLang?: LanguageCode;
 }
 
 export function GymAILandingPage({ initialLang = "es" }: GymAILandingPageProps) {
-  const [lang, setLang] = useState<"es" | "en">(initialLang);
+  const [lang, setLang] = useState<LanguageCode>(initialLang);
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"routine" | "biometrics" | "agent">("routine");
 
@@ -69,134 +71,196 @@ export function GymAILandingPage({ initialLang = "es" }: GymAILandingPageProps) 
   const [isGenerating, setIsGenerating] = useState(false);
   const [aiResponse, setAiResponse] = useState<string | null>(null);
 
-  const t = {
+  const t: Record<LanguageCode, {
+    heroTitle1: string;
+    heroTitle2: string;
+    sub1: string;
+    sub2: string;
+    downloadBtn: string;
+    howItWorks: string;
+    feat1Title: string;
+    feat1Sub: string;
+    feat2Title: string;
+    feat2Sub: string;
+    feat3Title: string;
+    feat3Sub: string;
+    login: string;
+    signup: string;
+    navFeatures: string;
+    navPricing: string;
+    navFaq: string;
+    screenRoutines: string;
+    screenRoutinesSub: string;
+    screenAi: string;
+    screenAiSub: string;
+    screenHealth: string;
+    screenHealthSub: string;
+    screenSocial: string;
+    screenSocialSub: string;
+  }> = {
     es: {
-      badge: "TFG • Calificación 9.8 (Matrícula de Honor)",
-      heroTitle1: "El Futuro del Fitness.",
-      heroTitle2: "Impulsado por Agentes de IA.",
-      heroSubtitle: "GymAI es una plataforma nativa Android (Jetpack Compose) con arquitectura Offline-First. Integra un agente cognitivo autónomo con Google Gemini y Health Connect para adaptar tus entrenamientos y recuperación en tiempo real.",
-      downloadApk: "Descargar APK (Beta v1.2)",
-      exploreLive: "Explorar Ecosistema",
-      backedBy: "TECNOLOGÍAS DE VANGUARDIA",
-      featuresTitle: "¿Por qué GymAI redefine el entrenamiento?",
-      featuresSubtitle: "Diseñado para superar las limitaciones de las apps tradicionales con verdadera inteligencia adaptativa.",
-      features: [
-        {
-          icon: Brain,
-          title: "Agente Cognitivo Autónomo",
-          desc: "Orquestación multi-paso con Google Gemini. Razona sobre tu fatiga acumulada, variabilidad cardíaca y progresión para ajustar pesos y series antes de cada sesión."
-        },
-        {
-          icon: Lock,
-          title: "Offline-First & Privacidad Total",
-          desc: "Tus métricas biométricas nunca salen de tu dispositivo sin tu consentimiento. Persistencia local ultrarrápida con Room DB y SQLite cifrado."
-        },
-        {
-          icon: Activity,
-          title: "Sincronización Health Connect",
-          desc: "Integración profunda con el ecosistema de Android para leer pasos, calidad de sueño, gasto calórico y frecuencia cardíaca sin fricción."
-        },
-        {
-          icon: Zap,
-          title: "UI Reactiva con Jetpack Compose",
-          desc: "Interfaz fluida a 120 FPS desarrollada íntegramente en Kotlin y Material Design 3 con arquitectura Clean Architecture + MVI."
-        }
-      ],
-      interactiveAiTitle: "Prueba el razonamiento del Agente GymAI",
-      interactiveAiDesc: "Experimenta cómo el agente evalúa biometría real para generar micro-ajustes tácticos en tu rutina.",
-      demoPrompts: [
-        "Dormí 5 horas y mi VFC está baja, ¿cómo ajusto mi sesión de pierna?",
-        "Estanqué en press banca a 85kg 4x5, necesito periodización ondulatoria.",
-        "Tengo dolor en el manguito rotador derecho, dame alternativas seguras."
-      ],
-      architectureTitle: "Arquitectura Técnica del Sistema",
-      architectureSubtitle: "Ingeniería de software robusta diseñada para máxima escalabilidad y cero latencia.",
-      archCards: [
-        {
-          title: "Capa de Presentación",
-          badge: "UI / UX",
-          items: ["Jetpack Compose declarativo", "Patrón MVI (Model-View-Intent)", "Navegación por grafos segura", "Componentes adaptables Tablet/Móvil"]
-        },
-        {
-          title: "Capa de Inteligencia",
-          badge: "AI Agent",
-          items: ["Google Gemini Flash / Pro API", "Inferencia de contexto biológico", "Prompt engineering estructurado", "Fallback de lógica local offline"]
-        },
-        {
-          title: "Capa de Datos & Core",
-          badge: "Persistence",
-          items: ["Room ORM con SQLite", "Android Health Connect SDK", "Kotlin Coroutines & Flow", "Cifrado de datos AES-256"]
-        }
-      ],
-      ctaTitle: "¿Listo para transformar tu rendimiento?",
-      ctaSubtitle: "Accede a la beta de GymAI y entrena con un agente inteligente adaptado a tu biología.",
-      backToPortfolio: "Volver a maurozelenka.com",
-      footerRights: "GymAI • Desarrollado por Mauro Zelenka Pedrosa como Trabajo de Fin de Grado (Matrícula de Honor)."
+      heroTitle1: "Tu entrenamiento.",
+      heroTitle2: "Potenciado por IA.",
+      sub1: "Entrena mejor, progresa más.",
+      sub2: "GymAI adapta cada sesión a ti en tiempo real.",
+      downloadBtn: "Descargar GymAI",
+      howItWorks: "Descubrir cómo funciona",
+      feat1Title: "Rutinas adaptativas",
+      feat1Sub: "a tu rendimiento",
+      feat2Title: "Análisis en tiempo real",
+      feat2Sub: "de cada sesión",
+      feat3Title: "100% Offline-First",
+      feat3Sub: "privacidad total",
+      login: "Iniciar sesión",
+      signup: "Registrarse",
+      navFeatures: "Características",
+      navPricing: "Precios",
+      navFaq: "Preguntas",
+      screenRoutines: "Rutinas & Series",
+      screenRoutinesSub: "Catálogo y ejecución",
+      screenAi: "Agentes Gemini",
+      screenAiSub: "Asistente en caliente",
+      screenHealth: "Perfil & Salud",
+      screenHealthSub: "Health Connect SDK",
+      screenSocial: "Feed Social",
+      screenSocialSub: "Comunidad y PRs",
     },
     en: {
-      badge: "Bachelor Thesis • 9.8 / 10 Honors (Matrícula de Honor)",
-      heroTitle1: "The Future of Fitness.",
-      heroTitle2: "Powered by AI Agents.",
-      heroSubtitle: "GymAI is an offline-first native Android platform built with Jetpack Compose. It integrates an autonomous cognitive agent with Google Gemini and Health Connect to adapt your workouts and recovery in real time.",
-      downloadApk: "Download APK (Beta v1.2)",
-      exploreLive: "Explore Ecosystem",
-      backedBy: "STATE OF THE ART TECHNOLOGIES",
-      featuresTitle: "Why GymAI redefines modern training?",
-      featuresSubtitle: "Engineered to overcome traditional fitness apps with genuine adaptive intelligence.",
-      features: [
-        {
-          icon: Brain,
-          title: "Autonomous Cognitive Agent",
-          desc: "Multi-step reasoning with Google Gemini. Evaluates accumulated fatigue, HRV, and workout logs to tailor loads and volume before every session."
-        },
-        {
-          icon: Lock,
-          title: "Offline-First & Pure Privacy",
-          desc: "Your biological metrics stay on your device. Ultra-fast local persistence with Room DB and encrypted SQLite."
-        },
-        {
-          icon: Activity,
-          title: "Health Connect Deep Sync",
-          desc: "Native integration with Android Health Connect to ingest steps, sleep stages, calories, and resting heart rate frictionlessly."
-        },
-        {
-          icon: Zap,
-          title: "120 FPS Jetpack Compose UI",
-          desc: "Buttery-smooth modern interface crafted in Kotlin with Material Design 3 and Clean Architecture + MVI patterns."
-        }
-      ],
-      interactiveAiTitle: "Test the GymAI Agent Reasoning",
-      interactiveAiDesc: "Experience how the agent processes real biological context to generate proactive workout adjustments.",
-      demoPrompts: [
-        "Slept 5 hours and my HRV dropped 20%, how should I adjust leg day?",
-        "Plateaued on bench press at 85kg 4x5, design daily undulating periodization.",
-        "Slight right rotator cuff impingement, provide safe chest alternatives."
-      ],
-      architectureTitle: "System Technical Architecture",
-      architectureSubtitle: "Robust software engineering designed for high performance and zero latency.",
-      archCards: [
-        {
-          title: "Presentation Layer",
-          badge: "UI / UX",
-          items: ["Declarative Jetpack Compose", "MVI (Model-View-Intent) pattern", "Type-safe navigation graphs", "Adaptive Mobile/Tablet layout"]
-        },
-        {
-          title: "Intelligence Layer",
-          badge: "AI Agent",
-          items: ["Google Gemini Flash / Pro API", "Biological context reasoning", "Structured JSON prompt schema", "Offline heuristic fallback"]
-        },
-        {
-          title: "Data & Core Layer",
-          badge: "Persistence",
-          items: ["Room ORM with SQLite", "Android Health Connect SDK", "Kotlin Coroutines & Flow", "AES-256 data encryption"]
-        }
-      ],
-      ctaTitle: "Ready to elevate your human performance?",
-      ctaSubtitle: "Get access to GymAI beta and train with an autonomous agent tailored to your physiology.",
-      backToPortfolio: "Back to maurozelenka.com",
-      footerRights: "GymAI • Engineered by Mauro Zelenka Pedrosa as Bachelor's Thesis (Top Honors)."
-    }
-  }[lang];
+      heroTitle1: "Your workout.",
+      heroTitle2: "Powered by AI.",
+      sub1: "Train better, progress further.",
+      sub2: "GymAI adapts every single workout to you in real-time.",
+      downloadBtn: "Download GymAI",
+      howItWorks: "See how it works",
+      feat1Title: "Adaptive routines",
+      feat1Sub: "to your performance",
+      feat2Title: "Real-time analysis",
+      feat2Sub: "of every workout",
+      feat3Title: "100% Offline-First",
+      feat3Sub: "total privacy",
+      login: "Log in",
+      signup: "Sign up",
+      navFeatures: "Features",
+      navPricing: "Pricing",
+      navFaq: "FAQ",
+      screenRoutines: "Routines & Sets",
+      screenRoutinesSub: "Catalog & execution",
+      screenAi: "Gemini Agents",
+      screenAiSub: "Live assistance",
+      screenHealth: "Profile & Health",
+      screenHealthSub: "Health Connect SDK",
+      screenSocial: "Social Feed",
+      screenSocialSub: "Community & PRs",
+    },
+    de: {
+      heroTitle1: "Dein Training.",
+      heroTitle2: "KI-gesteuert.",
+      sub1: "Besser trainieren, schneller vorankommen.",
+      sub2: "GymAI passt jedes Training in Echtzeit an dich an.",
+      downloadBtn: "GymAI herunterladen",
+      howItWorks: "Funktionsweise entdecken",
+      feat1Title: "Adaptive Routinen",
+      feat1Sub: "an deine Leistung",
+      feat2Title: "Echtzeit-Analyse",
+      feat2Sub: "jeder Einheit",
+      feat3Title: "100% Offline-First",
+      feat3Sub: "volle Privatsphäre",
+      login: "Anmelden",
+      signup: "Registrieren",
+      navFeatures: "Funktionen",
+      navPricing: "Preise",
+      navFaq: "FAQ",
+      screenRoutines: "Routinen & Sätze",
+      screenRoutinesSub: "Katalog & Ausführung",
+      screenAi: "Gemini Agenten",
+      screenAiSub: "Live-Assistenz",
+      screenHealth: "Profil & Gesundheit",
+      screenHealthSub: "Health Connect SDK",
+      screenSocial: "Social Feed",
+      screenSocialSub: "Community & Rekorde",
+    },
+    fr: {
+      heroTitle1: "Votre entraînement.",
+      heroTitle2: "Propulsé par l'IA.",
+      sub1: "Entraînez-vous mieux, progressez plus vite.",
+      sub2: "GymAI adapte chaque séance à votre physiologie en temps réel.",
+      downloadBtn: "Télécharger GymAI",
+      howItWorks: "Découvrir le système",
+      feat1Title: "Routines adaptatives",
+      feat1Sub: "à vos performances",
+      feat2Title: "Analyse en temps réel",
+      feat2Sub: "de chaque séance",
+      feat3Title: "100% Offline-First",
+      feat3Sub: "confidentialité totale",
+      login: "Connexion",
+      signup: "S'inscrire",
+      navFeatures: "Fonctionnalités",
+      navPricing: "Tarifs",
+      navFaq: "FAQ",
+      screenRoutines: "Routines & Séries",
+      screenRoutinesSub: "Catalogue et exécution",
+      screenAi: "Agents Gemini",
+      screenAiSub: "Assistance en direct",
+      screenHealth: "Profil & Santé",
+      screenHealthSub: "Health Connect SDK",
+      screenSocial: "Fil Social",
+      screenSocialSub: "Communauté et PRs",
+    },
+    it: {
+      heroTitle1: "Il tuo allenamento.",
+      heroTitle2: "Potenziato dall'IA.",
+      sub1: "Allenati meglio, progredisci più velocemente.",
+      sub2: "GymAI adatta ogni sessione a te in tempo reale.",
+      downloadBtn: "Scarica GymAI",
+      howItWorks: "Scopri come funziona",
+      feat1Title: "Routine adattive",
+      feat1Sub: "alle tue prestazioni",
+      feat2Title: "Analisi in tempo reale",
+      feat2Sub: "di ogni sessione",
+      feat3Title: "100% Offline-First",
+      feat3Sub: "massima privacy",
+      login: "Accedi",
+      signup: "Registrati",
+      navFeatures: "Funzionalità",
+      navPricing: "Prezzi",
+      navFaq: "FAQ",
+      screenRoutines: "Routine & Serie",
+      screenRoutinesSub: "Catalogo ed esecuzione",
+      screenAi: "Agenti Gemini",
+      screenAiSub: "Assistenza in tempo reale",
+      screenHealth: "Profilo & Salute",
+      screenHealthSub: "Health Connect SDK",
+      screenSocial: "Feed Sociale",
+      screenSocialSub: "Community e record",
+    },
+    nl: {
+      heroTitle1: "Jouw training.",
+      heroTitle2: "Aangedreven door AI.",
+      sub1: "Beter trainen, sneller vooruitgang boeken.",
+      sub2: "GymAI past elke sessie in realtime aan jouw lichaam aan.",
+      downloadBtn: "Download GymAI",
+      howItWorks: "Ontdek de werking",
+      feat1Title: "Adaptieve routines",
+      feat1Sub: "op jouw prestaties",
+      feat2Title: "Realtime analyse",
+      feat2Sub: "van elke sessie",
+      feat3Title: "100% Offline-First",
+      feat3Sub: "volledige privacy",
+      login: "Inloggen",
+      signup: "Aanmelden",
+      navFeatures: "Functies",
+      navPricing: "Prijzen",
+      navFaq: "FAQ",
+      screenRoutines: "Routines & Sets",
+      screenRoutinesSub: "Catalogus & uitvoering",
+      screenAi: "Gemini Agenten",
+      screenAiSub: "Live ondersteuning",
+      screenHealth: "Profiel & Gezondheid",
+      screenHealthSub: "Health Connect SDK",
+      screenSocial: "Sociaal Overzicht",
+      screenSocialSub: "Community & PRs",
+    },
+  }[lang] || t.es;
 
   const handleSimulateAi = (customPrompt?: string) => {
     const prompt = customPrompt || promptInput;
@@ -275,14 +339,14 @@ export function GymAILandingPage({ initialLang = "es" }: GymAILandingPageProps) 
             </span>
           </Link>
 
-          {/* Right-aligned Navigation + Actions (Exact Linear Structure) */}
+          {/* Right-aligned Navigation + Actions (Real Page Section Links) */}
           <div className="flex items-center gap-6 text-[13px] text-[#8a8f98] font-normal">
             
-            {/* Nav Links */}
+            {/* Real Nav Links */}
             <div className="hidden md:flex items-center gap-6">
-              <a href="#features" className="hover:text-[#f7f8f8] transition-colors duration-150">{lang === "es" ? "Características" : "Features"}</a>
-              <a href="#mockups" className="hover:text-[#f7f8f8] transition-colors duration-150">{lang === "es" ? "App & Tablet" : "App & Tablet"}</a>
-              <a href="#architecture" className="hover:text-[#f7f8f8] transition-colors duration-150">{lang === "es" ? "Arquitectura" : "Architecture"}</a>
+              <a href="#hero" className="hover:text-[#f7f8f8] transition-colors duration-150">{t.navFeatures}</a>
+              <a href="#pricing" className="hover:text-[#f7f8f8] transition-colors duration-150">{t.navPricing}</a>
+              <a href="#faq" className="hover:text-[#f7f8f8] transition-colors duration-150">{t.navFaq}</a>
             </div>
 
             {/* Vertical Divider Line (Linear style) */}
@@ -292,10 +356,10 @@ export function GymAILandingPage({ initialLang = "es" }: GymAILandingPageProps) 
             <div className="relative">
               <button
                 onClick={() => setIsLangOpen(!isLangOpen)}
-                className="flex items-center gap-2 px-2.5 py-1 rounded-[8px] bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.1] text-white text-[13px] font-medium transition-all shadow-sm"
+                className="flex items-center gap-2 px-2.5 py-1 rounded-[8px] bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.1] text-white text-[13px] font-medium transition-all shadow-sm uppercase"
               >
-                <span>{lang.toUpperCase()}</span>
-                <ChevronsUpDown size={13} className="text-zinc-400" />
+                <span>{lang}</span>
+                <ChevronsUpDown size={13} className="text-[#8a8f98]" />
               </button>
 
               <AnimatePresence>
@@ -323,14 +387,12 @@ export function GymAILandingPage({ initialLang = "es" }: GymAILandingPageProps) 
                         { code: "it", label: "Italiano" },
                         { code: "nl", label: "Nederlands" },
                       ].map((item) => {
-                        const isSelected = (lang === "es" && item.code === "es") || (lang === "en" && item.code === "en");
+                        const isSelected = lang === item.code;
                         return (
                           <button
                             key={item.code}
                             onClick={() => {
-                              if (item.code === "es" || item.code === "en") {
-                                setLang(item.code);
-                              }
+                              setLang(item.code as LanguageCode);
                               setIsLangOpen(false);
                             }}
                             className={`w-full flex items-center justify-between px-3.5 py-2 text-[13px] text-left transition-colors ${
@@ -341,7 +403,7 @@ export function GymAILandingPage({ initialLang = "es" }: GymAILandingPageProps) 
                           >
                             <span>{item.label}</span>
                             {isSelected && (
-                              <Check size={14} className="text-white" />
+                              <Check size={14} className="text-emerald-400" />
                             )}
                           </button>
                         );
@@ -359,7 +421,7 @@ export function GymAILandingPage({ initialLang = "es" }: GymAILandingPageProps) 
               rel="noopener noreferrer"
               className="text-[#8a8f98] hover:text-[#f7f8f8] transition-colors duration-150 text-[13px] font-normal"
             >
-              {lang === "es" ? "Iniciar sesión" : "Log in"}
+              {t.login}
             </a>
 
             {/* Linear Style Sign up Pill Button */}
@@ -369,7 +431,7 @@ export function GymAILandingPage({ initialLang = "es" }: GymAILandingPageProps) 
               rel="noopener noreferrer"
               className="px-3.5 py-1.5 rounded-full bg-[#e6e8eb] hover:bg-white text-[#08090a] font-medium text-[13px] transition-all duration-150 shadow-sm"
             >
-              <span>{lang === "es" ? "Registrarse" : "Sign up"}</span>
+              <span>{t.signup}</span>
             </a>
 
           </div>
@@ -378,7 +440,7 @@ export function GymAILandingPage({ initialLang = "es" }: GymAILandingPageProps) 
       </nav>
 
       {/* 🌟 HERO SECTION (100% Symmetrical Viewport Fit) */}
-      <section className="relative z-10 min-h-[calc(100vh-70px)] flex items-center justify-center px-6 sm:px-14 py-2 sm:py-4 max-w-7xl mx-auto">
+      <section id="hero" className="relative z-10 min-h-[calc(100vh-70px)] flex items-center justify-center px-6 sm:px-14 py-2 sm:py-4 max-w-7xl mx-auto">
         <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center">
           
           {/* LEFT COLUMN: Clean Typography & Exact Copy */}
@@ -387,7 +449,7 @@ export function GymAILandingPage({ initialLang = "es" }: GymAILandingPageProps) 
             {/* Exact Headline (Cinematic Apple / Linear Word Reveal) */}
             <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black tracking-tight leading-[1.08] text-white mb-4 overflow-hidden">
               <span className="inline-block overflow-hidden pb-1">
-                {(lang === "es" ? ["Tu", "entrenamiento."] : ["Your", "workout."]).map((word, i) => (
+                {t.heroTitle1.split(" ").map((word, i) => (
                   <motion.span
                     key={i}
                     initial={{ opacity: 0, y: 35, filter: "blur(8px)" }}
@@ -405,7 +467,7 @@ export function GymAILandingPage({ initialLang = "es" }: GymAILandingPageProps) 
               </span>
               <br />
               <span className="inline-block overflow-hidden pb-1">
-                {(lang === "es" ? ["Potenciado", "por", "IA."] : ["Powered", "by", "AI."]).map((word, i) => (
+                {t.heroTitle2.split(" ").map((word, i) => (
                   <motion.span
                     key={i}
                     initial={{ opacity: 0, y: 35, filter: "blur(8px)" }}
@@ -446,8 +508,8 @@ export function GymAILandingPage({ initialLang = "es" }: GymAILandingPageProps) 
               transition={{ duration: 0.8, delay: 0.7, ease: "easeOut" }}
               className="text-sm sm:text-base text-zinc-300 leading-relaxed mb-6"
             >
-              <p>{lang === "es" ? "Entrena mejor, progresa más." : "Train better, progress further."}</p>
-              <p className="text-zinc-400">{lang === "es" ? "GymAI adapta cada sesión a ti en tiempo real." : "GymAI adapts every single workout to you in real-time."}</p>
+              <p>{t.sub1}</p>
+              <p className="text-zinc-400">{t.sub2}</p>
             </motion.div>
 
             {/* Action Buttons: Solid Green Pill + Transparent Outline Pill */}
@@ -464,14 +526,14 @@ export function GymAILandingPage({ initialLang = "es" }: GymAILandingPageProps) 
                 className="px-6 py-3 rounded-full bg-emerald-400 hover:bg-emerald-300 text-black font-extrabold text-xs sm:text-sm flex items-center gap-2 shadow-[0_0_25px_rgba(52,211,153,0.35)] transition-all cursor-pointer"
               >
                 <Download size={15} />
-                <span>{lang === "es" ? "Descargar GymAI" : "Download GymAI"}</span>
+                <span>{t.downloadBtn}</span>
               </a>
 
               <a
-                href="#features"
+                href="#pricing"
                 className="px-6 py-3 rounded-full bg-transparent hover:bg-white/[0.04] border border-white/[0.12] text-white font-medium text-xs sm:text-sm flex items-center gap-2 transition-all cursor-pointer"
               >
-                <span>{lang === "es" ? "Descubrir cómo funciona" : "See how it works"}</span>
+                <span>{t.howItWorks}</span>
                 <ArrowRight size={14} />
               </a>
             </motion.div>
@@ -489,8 +551,8 @@ export function GymAILandingPage({ initialLang = "es" }: GymAILandingPageProps) 
                   <TrendingUp size={14} />
                 </div>
                 <div>
-                  <h4 className="text-[11px] font-bold text-white leading-snug">{lang === "es" ? "Rutinas adaptativas" : "Adaptive routines"}</h4>
-                  <p className="text-[10px] text-zinc-400 leading-tight mt-0.5">{lang === "es" ? "a tu rendimiento" : "to your performance"}</p>
+                  <h4 className="text-[11px] font-bold text-white leading-snug">{t.feat1Title}</h4>
+                  <p className="text-[10px] text-zinc-400 leading-tight mt-0.5">{t.feat1Sub}</p>
                 </div>
               </div>
 
@@ -500,8 +562,8 @@ export function GymAILandingPage({ initialLang = "es" }: GymAILandingPageProps) 
                   <Activity size={14} />
                 </div>
                 <div>
-                  <h4 className="text-[11px] font-bold text-white leading-snug">{lang === "es" ? "Análisis en tiempo real" : "Real-time analysis"}</h4>
-                  <p className="text-[10px] text-zinc-400 leading-tight mt-0.5">{lang === "es" ? "de cada sesión" : "of every session"}</p>
+                  <h4 className="text-[11px] font-bold text-white leading-snug">{t.feat2Title}</h4>
+                  <p className="text-[10px] text-zinc-400 leading-tight mt-0.5">{t.feat2Sub}</p>
                 </div>
               </div>
 
@@ -511,8 +573,8 @@ export function GymAILandingPage({ initialLang = "es" }: GymAILandingPageProps) 
                   <ShieldCheck size={14} />
                 </div>
                 <div>
-                  <h4 className="text-[11px] font-bold text-white leading-snug">{lang === "es" ? "Máxima eficiencia," : "Peak efficiency,"}</h4>
-                  <p className="text-[10px] text-zinc-400 leading-tight mt-0.5">{lang === "es" ? "mejores resultados" : "better results"}</p>
+                  <h4 className="text-[11px] font-bold text-white leading-snug">{t.feat3Title}</h4>
+                  <p className="text-[10px] text-zinc-400 leading-tight mt-0.5">{t.feat3Sub}</p>
                 </div>
               </div>
             </motion.div>
@@ -524,7 +586,7 @@ export function GymAILandingPage({ initialLang = "es" }: GymAILandingPageProps) 
               transition={{ duration: 0.8, delay: 0.5 }}
               className="flex items-center gap-3 text-xs text-zinc-400"
             >
-              <span className="text-[11px] text-zinc-500 font-medium">{lang === "es" ? "Tecnología impulsada por" : "Technology powered by"}</span>
+              <span className="text-[11px] text-zinc-500 font-medium">Technology powered by</span>
               <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#0d1410] border border-white/[0.06] text-white text-[11px]">
                 <svg className="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24">
                   <path
@@ -604,26 +666,26 @@ export function GymAILandingPage({ initialLang = "es" }: GymAILandingPageProps) 
                 { 
                   id: "rutinas",
                   icon: Dumbbell, 
-                  title: lang === "es" ? "Rutinas & Series" : "Routines & Sets", 
-                  sub: lang === "es" ? "Catálogo y ejecución" : "Catalog & execution" 
+                  title: t.screenRoutines, 
+                  sub: t.screenRoutinesSub
                 },
                 { 
                   id: "ia",
                   icon: Bot, 
-                  title: lang === "es" ? "Agentes Gemini" : "Gemini Agents", 
-                  sub: lang === "es" ? "Asistente en caliente" : "Live assistance" 
+                  title: t.screenAi, 
+                  sub: t.screenAiSub
                 },
                 { 
                   id: "perfil",
                   icon: Heart, 
-                  title: lang === "es" ? "Perfil & Salud" : "Profile & Health", 
-                  sub: lang === "es" ? "Health Connect SDK" : "Health Connect SDK" 
+                  title: t.screenHealth, 
+                  sub: t.screenHealthSub
                 },
                 { 
                   id: "feed",
                   icon: Users, 
-                  title: lang === "es" ? "Feed Social" : "Social Feed", 
-                  sub: lang === "es" ? "Comunidad y PRs" : "Community & PRs" 
+                  title: t.screenSocial, 
+                  sub: t.screenSocialSub
                 },
               ].map((item, idx) => {
                 const Icon = item.icon;
